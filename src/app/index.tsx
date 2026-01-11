@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { Pressable, View } from "react-native";
 import Animated, {
   useSharedValue,
+  withDelay,
   withTiming
 } from "react-native-reanimated";
 
@@ -19,11 +20,17 @@ export default function Index() {
     return {
       initialValues: {
         opacity: 0,
-        transform: [{ translateY: direction.value * 100 }],
+        transform: [
+          { translateY: direction.value * 100 },
+          { scale: direction.value === -1 ? 0.4 : 1 },
+        ],
       },
       animations: {
         opacity: withTiming(1, { duration: 300 }),
-        transform: [{ translateY: withTiming(0, { duration: 300 }) }],
+        transform: [
+          { translateY: withTiming(0, { duration: 300 }) },
+          { scale: withTiming(1, { duration: 300 }) },
+        ],
       },
     };
   };
@@ -33,11 +40,14 @@ export default function Index() {
     return {
       initialValues: {
         opacity: 1,
-        transform: [{ translateY: 0 }],
+        transform: [{ translateY: 0 }, { scale: 1 }],
       },
       animations: {
-        opacity: withTiming(0, { duration: 300 }),
-        transform: [{ translateY: withTiming(direction.value * -100, { duration: 300 }) }],
+        opacity: withDelay(100, withTiming(0, { duration: 200 })),
+        transform: [
+          { translateY: withTiming(direction.value * -100, { duration: 300 }) },
+          { scale: withTiming(direction.value === 1 ? 0.4 : 1, { duration: 300 }) },
+        ],
       },
     };
   };
@@ -45,12 +55,12 @@ export default function Index() {
   const nextWidget = useCallback(() => {
     direction.value = 1;
     setIndex((prev) => (prev + 1) % colors.length);
-  }, [index]);
+  }, [direction]);
 
   const prevWidget = useCallback(() => {
     direction.value = -1;
     setIndex((prev) => (prev - 1 + colors.length) % colors.length);
-  }, [index]);
+  }, [direction]);
 
   const currentColor = colors[index];
 
