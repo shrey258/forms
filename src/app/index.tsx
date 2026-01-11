@@ -1,35 +1,56 @@
 import { GlassView } from "expo-glass-effect";
 import { ArrowLeft, ArrowRight } from "lucide-react-native";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Pressable, View } from "react-native";
 import Animated, {
-  FadeInDown,
-  FadeInUp,
-  FadeOutDown,
-  FadeOutUp,
+  useSharedValue,
+  withTiming
 } from "react-native-reanimated";
 
-const colors = [
-  "#FF6B6B",
-  "#4ECDC4",
-  "#FFE66D",
-  "#A29BFE",
-  "#55EFC4",
-];
+const colors = ["#FF6B6B", "#4ECDC4", "#FFE66D", "#A29BFE", "#55EFC4"];
 
 export default function Index() {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState<"up" | "down">("up");
 
-  const nextWidget = () => {
-    setDirection("up");
+  const direction = useSharedValue(1);
+
+  const customEntering = (values: any) => {
+    "worklet";
+    return {
+      initialValues: {
+        opacity: 0,
+        transform: [{ translateY: direction.value * 100 }],
+      },
+      animations: {
+        opacity: withTiming(1, { duration: 300 }),
+        transform: [{ translateY: withTiming(0, { duration: 300 }) }],
+      },
+    };
+  };
+
+  const customExiting = (values: any) => {
+    "worklet";
+    return {
+      initialValues: {
+        opacity: 1,
+        transform: [{ translateY: 0 }],
+      },
+      animations: {
+        opacity: withTiming(0, { duration: 300 }),
+        transform: [{ translateY: withTiming(direction.value * -100, { duration: 300 }) }],
+      },
+    };
+  };
+
+  const nextWidget = useCallback(() => {
+    direction.value = 1;
     setIndex((prev) => (prev + 1) % colors.length);
-  };
+  }, [index]);
 
-  const prevWidget = () => {
-    setDirection("down");
+  const prevWidget = useCallback(() => {
+    direction.value = -1;
     setIndex((prev) => (prev - 1 + colors.length) % colors.length);
-  };
+  }, [index]);
 
   const currentColor = colors[index];
 
@@ -42,18 +63,13 @@ export default function Index() {
         backgroundColor: "#F5F5F7",
       }}
     >
-      {/* Widgets Section */}
       <View
         style={{ justifyContent: "center", alignItems: "center", width: "100%" }}
       >
         <Animated.View
           key={`widget-${index}`}
-          entering={
-            direction === "up" ? FadeInDown.springify() : FadeInUp.springify()
-          }
-          exiting={
-            direction === "up" ? FadeOutDown.springify() : FadeOutUp.springify()
-          }
+          entering={customEntering}
+          exiting={customExiting}
           style={{
             flexDirection: "row",
             justifyContent: "center",
