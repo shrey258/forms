@@ -13,7 +13,7 @@ export default function Index() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "black",
+        backgroundColor: "white",
       }}
     >
       <Animated.View
@@ -39,11 +39,13 @@ export default function Index() {
           style={{
             flex: 1,
             height: 50,
-            borderRadius: 10,
-            overflow:"hidden"
+            borderRadius: 15,
+            overflow: "hidden",
+            borderWidth: 1,
+            borderColor: "rgba(0, 0, 0, 0.1)",
           }}
         >
-          <GlassView style={{ flex: 1 }} />
+          <GlassView style={{ flex: 1, backgroundColor: "rgba(0, 0, 0, 0.05)" }} />
         </View>
       </Animated.View>
 
@@ -57,28 +59,30 @@ export default function Index() {
           marginTop: 40,
         }}
       >
-        <View style={{ overflow: "hidden", borderRadius: 30 }}>
+        <View style={{ overflow: "hidden", borderRadius: 30, borderWidth: 1, borderColor: "rgba(0, 0, 0, 0.1)" }}>
           <GlassView
             style={{
               width: 60,
               height: 60,
               justifyContent: "center",
               alignItems: "center",
+              backgroundColor: "rgba(0, 0, 0, 0.05)",
             }}
           >
-            <ArrowLeft color="white" size={24} />
+            <ArrowLeft color="black" size={24} />
           </GlassView>
         </View>
-        <View style={{ overflow: "hidden", borderRadius: 30 }}>
+        <View style={{ overflow: "hidden", borderRadius: 30, borderWidth: 1, borderColor: "rgba(0, 0, 0, 0.1)" }}>
           <GlassView
             style={{
               width: 60,
               height: 60,
               justifyContent: "center",
               alignItems: "center",
+              backgroundColor: "rgba(0, 0, 0, 0.05)",
             }}
           >
-            <ArrowRight color="white" size={24} />
+            <ArrowRight color="black" size={24} />
           </GlassView>
         </View>
       </View>
