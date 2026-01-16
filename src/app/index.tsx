@@ -24,7 +24,7 @@ export default function Index() {
         opacity: 0,
         transform: [
           { translateY: direction.value * 105 },
-          { scale: direction.value === -1 ? 0.4 : 1 },
+          { scale: direction.value === -1 ? 0.625 : 1 },
         ],
       },
       animations: {
@@ -49,7 +49,7 @@ export default function Index() {
         transform: [
           { translateY: withTiming(direction.value * -105, { duration: 300 }) },
           {
-            scale: withTiming(direction.value === 1 ? 0.4 : 1, {
+            scale: withTiming(direction.value === 1 ? 0.625 : 1, {
               duration: 300,
             }),
           },
@@ -65,11 +65,11 @@ export default function Index() {
         opacity: 0,
         transform: [
           { translateY: direction.value * 105 },
-          { scale: 0.4 },
+          { scale: 0.625 },
         ],
       },
       animations: {
-        opacity: withTiming(1, { duration: 300 }),
+        opacity: 1,
         transform: [
           { translateY: withTiming(0, { duration: 300 }) },
           { scale: withTiming(1, { duration: 300 }) },
@@ -89,7 +89,7 @@ export default function Index() {
         opacity: withTiming(0, { duration: 300 }),
         transform: [
           { translateY: withTiming(direction.value * -105, { duration: 300 }) },
-          { scale: withTiming(0.4, { duration: 300 }) },
+          { scale: withTiming(0.625, { duration: 300 }) },
         ],
       },
     };
@@ -139,8 +139,8 @@ export default function Index() {
               exiting={customCircleExiting}
               layout={Layout.springify()}
               style={{
-                width: 48,
-                height: 48,
+                width: 35,
+                height: 35,
                 borderRadius: 24,
                 backgroundColor: color,
                 marginLeft: i === 0 ? 0 : -18,
