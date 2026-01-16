@@ -129,6 +129,7 @@ export default function Index() {
       >
         <Pressable
           onPress={prevWidget}
+          disabled={index === 0}
           style={({ pressed }) => ({
             opacity: pressed ? 0.7 : 1,
             overflow: "hidden",
@@ -143,15 +144,16 @@ export default function Index() {
               height: 60,
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: "rgba(0, 0, 0, 0.05)",
+              backgroundColor: index === 0 ? "gray" : "rgba(0, 0, 0, 0.05)",
             }}
           >
-            <ArrowLeft color="black" size={24} />
+            <ArrowLeft color={index === 0 ? "gray" : "black"} size={24} />
           </GlassView>
         </Pressable>
 
         <Pressable
           onPress={nextWidget}
+          disabled={index === colors.length - 1}
           style={({ pressed }) => ({
             opacity: pressed ? 0.7 : 1,
             overflow: "hidden",
@@ -166,10 +168,10 @@ export default function Index() {
               height: 60,
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: "rgba(0, 0, 0, 0.05)",
+              backgroundColor: index === colors.length - 1 ? "gray" : "rgba(0, 0, 0, 0.05)",
             }}
           >
-            <ArrowRight color="black" size={24} />
+            <ArrowRight color={index === colors.length - 1 ? "gray" : "black"} size={24} />
           </GlassView>
         </Pressable>
       </View>
