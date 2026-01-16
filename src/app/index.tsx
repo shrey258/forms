@@ -3,12 +3,10 @@ import { ArrowLeft, ArrowRight } from "lucide-react-native";
 import { useCallback, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, {
-  FadeIn,
-  FadeOut,
   Layout,
   useSharedValue,
   withDelay,
-  withTiming,
+  withTiming
 } from "react-native-reanimated";
 
 const colors = ["#FF6B6B", "#4ECDC4", "#FFE66D", "#A29BFE", "#55EFC4"];
@@ -50,7 +48,48 @@ export default function Index() {
         opacity: withDelay(100, withTiming(0, { duration: 200 })),
         transform: [
           { translateY: withTiming(direction.value * -105, { duration: 300 }) },
-          { scale: withTiming(direction.value === 1 ? 0.4 : 1, { duration: 300 }) },
+          {
+            scale: withTiming(direction.value === 1 ? 0.4 : 1, {
+              duration: 300,
+            }),
+          },
+        ],
+      },
+    };
+  };
+
+  const customCircleEntering = (values: any) => {
+    "worklet";
+    return {
+      initialValues: {
+        opacity: 0,
+        transform: [
+          { translateY: direction.value * 105 },
+          { scale: 0.4 },
+        ],
+      },
+      animations: {
+        opacity: withTiming(1, { duration: 300 }),
+        transform: [
+          { translateY: withTiming(0, { duration: 300 }) },
+          { scale: withTiming(1, { duration: 300 }) },
+        ],
+      },
+    };
+  };
+
+  const customCircleExiting = (values: any) => {
+    "worklet";
+    return {
+      initialValues: {
+        opacity: 1,
+        transform: [{ translateY: 0 }, { scale: 1 }],
+      },
+      animations: {
+        opacity: withTiming(0, { duration: 300 }),
+        transform: [
+          { translateY: withTiming(direction.value * -105, { duration: 300 }) },
+          { scale: withTiming(0.4, { duration: 300 }) },
         ],
       },
     };
@@ -84,7 +123,7 @@ export default function Index() {
       >
         {/* Overlapping Circles (Progress Trail) */}
         <Animated.View
-         layout={Layout.springify()}
+          layout={Layout.springify()}
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -96,8 +135,8 @@ export default function Index() {
           {colors.slice(0, index).map((color, i) => (
             <Animated.View
               key={color}
-              entering={FadeIn.duration(400)}
-              exiting={FadeOut.duration(300)}
+              entering={customCircleEntering}
+              exiting={customCircleExiting}
               layout={Layout.springify()}
               style={{
                 width: 48,
