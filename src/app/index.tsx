@@ -64,7 +64,7 @@ export default function Index() {
       initialValues: {
         opacity: 0,
         transform: [
-          { translateY: direction.value * 105 },
+          { translateY: 50 },
           { scale: 0.625 },
         ],
       },
@@ -88,7 +88,7 @@ export default function Index() {
       animations: {
         opacity: withTiming(0, { duration: 300 }),
         transform: [
-          { translateY: withTiming(direction.value * -105, { duration: 300 }) },
+          { translateY: withTiming( 50, { duration: 300 }) },
           { scale: withTiming(0.625, { duration: 300 }) },
         ],
       },
@@ -100,7 +100,7 @@ export default function Index() {
 
   const nextWidget = useCallback(() => {
     direction.value = 1;
-    setIndex((prev) => (prev + 1) % colors.length);
+    setIndex((prev) => (prev + 1) % colors.length); 
   }, [direction]);
 
   const prevWidget = useCallback(() => {
