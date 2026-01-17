@@ -173,7 +173,7 @@ function UnifiedWidget({
       translateY = 150;
       scale = 0.8;
       opacity = 0;
-      zIndex = -1;
+      zIndex = 0; // Don't drop to -1 immediately
     }
 
     return {
@@ -182,7 +182,7 @@ function UnifiedWidget({
         { translateY: withSpring(translateY, SPRING_CONFIG) },
         { scale: withSpring(scale, SPRING_CONFIG) },
       ],
-      opacity: withTiming(opacity, { duration: 400 }),
+      opacity: withTiming(opacity, { duration: 300 }),
       zIndex,
     };
   });
